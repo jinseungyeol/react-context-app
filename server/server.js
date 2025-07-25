@@ -9,7 +9,7 @@ const port = 4000;
 app.use(cors({
   origin: [
     'http://localhost:3000',
-    'https://react-context-app-txfn.onrender.com'
+    'https://react-context-clone.netlify.app/'
   ],
   credentials: true
 }));
