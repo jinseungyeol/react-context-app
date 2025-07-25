@@ -5,12 +5,21 @@ const fs = require('fs');
 const app = express();
 app.use(express.json());
 
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://react-context-clone.netlify.app'  // 여기 새 도메인 추가
+];
+
 const port = 4000;
 app.use(cors({
-  origin: [
-    'http://localhost:3000',
-    'https://react-context-clone.netlify.app/'
-  ],
+  origin: function(origin, callback) {
+    if (!origin) return callback(null, true); // Postman 등 CORS 없는 요청 허용
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = 'CORS 정책상 허용되지 않은 도메인입니다.';
+      return callback(new Error(msg), false);
+    }
+    return callback(null, true);
+  },
   credentials: true
 }));
 
